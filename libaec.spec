@@ -1,10 +1,10 @@
 Name:           libaec
-Version:        1.0.0
-Release:        2%{?dist}
+Version:        1.0.1
+Release:        1%{?dist}
 Summary:        Adaptive Entropy Coding library
 License:        BSD
 Url:            https://gitlab.dkrz.de/k202009/libaec
-Source:         https://gitlab.dkrz.de/k202009/libaec/uploads/631e85bcf877c2dcaca9b2e6d6526339/libaec-1.0.0.tar.gz
+Source:         https://gitlab.dkrz.de/k202009/libaec/repository/archive.tar.gz?ref=v%{version}/%{name}-%{version}.tar.gz
 
 BuildRequires:  cmake
 
@@ -31,7 +31,8 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 Devel files for libaec (Adaptive Entropy Coding library).
 
 %prep
-%setup -q
+%setup -q -T -a 0 -c
+mv %{name}-v%{version}-*/* .
 
 %build
 mkdir build
@@ -42,25 +43,29 @@ popd
 
 %install
 %make_install -C build
-[ %{_lib} = lib ] || mv $RPM_BUILD_ROOT/%{_prefix}/{lib,%{_lib}}
 
 %check
-make -C build test 
+#test data missing in tarball for check_szcomp and sampledata.sh
+make -C build test ARGS="-E \(check_szcomp\|sampledata.sh\)"
 
 %post -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %files
-%doc README README.SZIP ChangeLog
-%license COPYING doc/patent.txt
+%doc README.md README.SZIP CHANGELOG.md
+%license Copyright.txt doc/patent.txt
 %{_bindir}/aec
 %{_libdir}/lib*.so.*
+%{_mandir}/man1/aec.*
 
 %files devel
 %{_includedir}/*.h
 %{_libdir}/lib*.so
 
 %changelog
+* Mon Jul 17 2017 Christoph Junghans <junghans@votca.org> - 1.0.1-1
+- version bump to 1.0.1 - bug #1471766
+
 * Wed Jun 21 2017 Christoph Junghans <junghans@votca.org> - 1.0.0-2
 - comments from review #1462443
 

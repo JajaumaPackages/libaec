@@ -1,6 +1,6 @@
 Name:           libaec
 Version:        1.0.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Adaptive Entropy Coding library
 License:        BSD
 Url:            https://gitlab.dkrz.de/k202009/libaec
@@ -63,6 +63,9 @@ make -C build test ARGS="-E \(check_szcomp\|sampledata.sh\)"
 %{_libdir}/lib*.so
 
 %changelog
+* Thu Aug 03 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.1-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Binutils_Mass_Rebuild
+
 * Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
 

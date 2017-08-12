@@ -5,8 +5,9 @@ Summary:        Adaptive Entropy Coding library
 License:        BSD
 Url:            https://gitlab.dkrz.de/k202009/libaec
 Source:         https://gitlab.dkrz.de/k202009/libaec/repository/archive.tar.gz?ref=v%{version}/%{name}-%{version}.tar.gz
+Patch0:         c99.patch
 
-BuildRequires:  cmake
+BuildRequires:  %{?fedora:cmake >= 3.1}%{?rhel:cmake3 >= 3.1}
 
 %description
 Libaec provides fast loss-less compression of 1 up to 32 bit wide
@@ -33,11 +34,12 @@ Devel files for libaec (Adaptive Entropy Coding library).
 %prep
 %setup -q -T -a 0 -c
 mv %{name}-v%{version}-*/* .
+%patch0 -p1
 
 %build
 mkdir build
 pushd build
-%cmake ..
+%{?fedora:%{cmake}}%{?rhel:%{cmake3}} ..
 %make_build
 popd
 

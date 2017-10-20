@@ -1,11 +1,10 @@
 Name:           libaec
-Version:        1.0.1
-Release:        4%{?dist}
+Version:        1.0.2
+Release:        1%{?dist}
 Summary:        Adaptive Entropy Coding library
 License:        BSD
 Url:            https://gitlab.dkrz.de/k202009/libaec
-Source:         https://gitlab.dkrz.de/k202009/libaec/repository/archive.tar.gz?ref=v%{version}/%{name}-%{version}.tar.gz
-Patch0:         c99.patch
+Source:         https://gitlab.dkrz.de/k202009/libaec/uploads/b30adc1abf805d7454896ab83c900eb8/libaec-%{version}.tar.gz
 
 BuildRequires:  %{?fedora:cmake >= 3.1}%{?rhel:cmake3 >= 3.1}
 
@@ -32,9 +31,7 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 Devel files for libaec (Adaptive Entropy Coding library).
 
 %prep
-%setup -q -T -a 0 -c
-mv %{name}-v%{version}-*/* .
-%patch0 -p1
+%setup -q
 
 %build
 mkdir build
@@ -65,6 +62,10 @@ make -C build test ARGS="-E \(check_szcomp\|sampledata.sh\)"
 %{_libdir}/lib*.so
 
 %changelog
+* Fri Oct 20 2017 Jajauma's Packages <jajauma@yandex.ru> - 1.0.2-1
+- Update to latest upstream release
+- Drop c99.patch
+
 * Sun Aug 13 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1.0.1-4
 - Tweaks for EPEL7
 
